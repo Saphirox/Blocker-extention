@@ -1,0 +1,14 @@
+[
+    { 
+        "origin":"stackoverflow.com",
+        "kind": "productivity" 
+    },
+    { 
+        "origin": "www.youtube.com",
+        "kind": "procrastination"
+    },
+    { 
+        "origin": "developer.chrome.com",
+        "kind": "productivity" 
+    }
+]

@@ -1,25 +1,18 @@
 switcherTimeout = undefined;
 
-
 chrome.runtime.onInstalled.addListener(() => {
+    const url = chrome.runtime.getURL('predefined-sites.json');
 
-
-    chrome.storage.local.set({'active-manager': { 
-        apps: [],
-        categories: ['productivity', 'procrastination', 'uncategorized'],
-        predefinedCategories: [{ 
-            origin: 'https://stackoverflow.com',
-            kind: 'productivity',         
-        },
-        { 
-            origin: 'https://www.youtube.com',
-            kind: 'procrastination',         
-        },
-        { 
-            origin: 'https://developer.chrome.com',
-            kind: 'productivity',         
-        }]
-    } });
+    fetch(url)
+    .then((response) => response.json()) //assuming file contains json
+    .then((json) => {
+        chrome.storage.local.set({'active-manager': { 
+            apps: [],
+            categories: ['productivity', 'procrastination', 'uncategorized'],
+            predefinedCategories: json 
+        } 
+    });
+});
 });
 
 chrome.tabs.onHighlighted.addListener(function(highlightInfo) {
@@ -32,26 +25,26 @@ chrome.tabs.onHighlighted.addListener(function(highlightInfo) {
             clearInterval(switcherTimeout);
         }
 
-        let url = new URL(tab.url);
-        console.log(url.origin);
+        let url = new URL(tab.url).hostname;
+        console.log(url);
 
         switcherTimeout = setInterval(() => {
             chrome.storage.local.get(['active-manager'], (obj) => {
                 const activeMangerObj = obj['active-manager'];
-                activeMangerObj.currentTabName = url.origin;
+                activeMangerObj.currentTabName = url;
                
-                const app = activeMangerObj.apps.filter(el => el.name == url.origin);
+                const app = activeMangerObj.apps.filter(el => el.name == url);
                 
                 if (!app.length) {
                     
                     const appCategory = 
-                        activeMangerObj.predefinedCategories.find(el => el.origin == url.origin);
+                        activeMangerObj.predefinedCategories.find(el => el.origin == url);
 
                     if (appCategory)  {
-                        activeMangerObj.apps.push({ seconds: 0 , name: url.origin, kind: appCategory.kind });
+                        activeMangerObj.apps.push({ seconds: 0 , name: url, kind: appCategory.kind });
                     } 
                     else {
-                        activeMangerObj.apps.push({ seconds: 0 , name: url.origin, kind: 'uncategorized' });
+                        activeMangerObj.apps.push({ seconds: 0 , name: url, kind: 'uncategorized' });
                     }
 
                     console.log(activeMangerObj.apps);
