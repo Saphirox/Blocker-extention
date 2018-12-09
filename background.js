@@ -61,28 +61,31 @@ function getCurrentApp(activeMangerObj) {
 }
 
 function notifyAboutSwitchingActivity(data) {
-    const maxSiteRedirect = 5;
+    const maxSiteRedirect = 3;
 
-    if (switcher.length > maxSiteRedirect){
-        const hasSwitchingProblem = switcher.map(c => c.seconds).reduce((acc, curr) => acc + curr, 0) 
-        / switcher.length < 20;
+    if(data && data.currentTabName && data.currentTabName.indexOf("twitter.com") !== -1)
+         new Notification("You swipe so much time, try to relax");
 
-        if (hasSwitchingProblem) {
-            new Notification("You swipe so much time, try to relax");
-            switcher = [];
-        }
-    }
+    // if (switcher.length > maxSiteRedirect){
+    //     const hasSwitchingProblem = switcher.map(c => c.seconds).reduce((acc, curr) => acc + curr, 0) 
+    //     / switcher.length < 10;
 
-    chrome.storage.local.get(['active-manager'], (obj) => {
-        const data = obj['active-manager'];
+    //     if (hasSwitchingProblem) {
+    //         new Notification("You swipe so much time, try to relax");
+    //     } 
+    //     switcher = [];
+    // }
 
-        if (data.currentTabName) {
-            switcher.push({
-                hostname: data.currentTabName,
-                seconds: getCurrentApp(data).seconds
-            });
-        }
-    });
+    // chrome.storage.local.get(['active-manager'], (obj) => {
+    //     const data = obj['active-manager'];
+
+    //     if (data && data.currentTabName) {
+    //         switcher.push({
+    //             hostname: data.currentTabName,
+    //             seconds: getCurrentApp(data).seconds
+    //         });
+    //     }
+    // });
 }
 
 function checkForNotifications(data) 
@@ -167,7 +170,7 @@ function Main() {
                 chrome.tabs.sendMessage(tab.id, {"sadasd": "asda"  });
             }
         });
-        }, 2000)
+        }, 15e3);
 
 
         chrome.storage.local.get(['active-manager'], (obj) => {

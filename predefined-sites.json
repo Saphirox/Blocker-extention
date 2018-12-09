@@ -18,5 +18,17 @@
     { 
         "origin": "docs.microsoft.com",
         "kind": "productivity" 
+    },
+    { 
+        "origin": "store.steampowered.com",
+        "kind": "productivity" 
+    },
+    { 
+        "origin": "www.wikiwand.com",
+        "kind": "productivity" 
+    },
+    { 
+        "origin": "docs.google.com",
+        "kind": "productivity" 
     }
 ]
