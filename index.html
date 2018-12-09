@@ -11,7 +11,22 @@
       <script src="popup.js"></script>
     </head>
     <body>
-        <canvas id="myChart" width="400" height="400">
-        </canvas>
-    </body>
+        <canvas id="canvas1" width="400" height="200"></canvas>
+        <canvas id="canvas2" width="400" height="200"></canvas>
+        
+        <div class="row">
+          <div class="container">
+              <div class="card" style="display: flex">
+                  <h2 style="color: green" id="productivity"></h2>
+                  <h2 style="margin-left: 10px">minutes of productivity for day</h2>
+              </div>
+    
+              <div class="card" style="display: flex">
+                  <h2 style="color: red" id="procrastination"></h2>
+                  <h2 style="margin-left: 10px">minutes of procrastination for day</h2>
+              </div>
+          </div>
+          
+        </div>
+      </body>
   </html>

@@ -1,8 +1,9 @@
 {
-    "name": "Getting Started Example",
+    "name": "Self tracker",
     "version": "1.0",
-    "description": "Build an Extension!",
-    "permissions": ["storage", "declarativeContent", "tabs",  "activeTab"],
+    "description": "Self tracker",
+    "permissions": ["storage", "declarativeContent", "tabs",  
+      "activeTab", "notifications"],
     "background": {
       "scripts": ["background.js"],
       "persistent": false
@@ -13,7 +14,8 @@
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
-        "js": ["chart.js", "popup.js"]
+        "js": ["chart.js", "popup.js"],
+        "css": ["bootstrap.css"] 
       }
     ],
     "manifest_version": 2
